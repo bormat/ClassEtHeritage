@@ -187,3 +187,27 @@ QUnit.test( "super", function( assert ) {
 	assert.equal( a.length, 1, "Passed!" );
 });
 
+QUnit.test( "severalSuper", function( assert ) {
+	var func = function(){};
+	func.prototype = {
+		coucou:function(){
+			return "hello";
+		}
+	}
+	Class.create("func2",{
+		extend : func,
+		coucou: function(){
+			return $super()+ "good afternoom";
+		}		
+	})
+	Class.create("func3",{
+		extend : func2,
+		coucou: function(){
+			return $super()+ "good evening";
+		}		
+	})
+	
+	var a = new func3();
+	assert.equal( a.coucou(),"hellogood afternoomgood evening", "Passed!" );
+});
+
